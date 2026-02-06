@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Rose Day</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      background: #e60026;
+      color: white;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .rose {
+      position: absolute;
+      font-size: 60px;
+      animation: pop 1s ease-out forwards;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      60% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .message {
+      margin-top: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #b3001b;
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <button onclick="showRose()">Click for a Surprise 🌹</button>
+
+  <script>
+    function showRose() {
+      // Remove existing elements
+      document.querySelectorAll('.rose, .message').forEach(e => e.remove());
+
+      // Create rose
+      const rose = document.createElement('div');
+      rose.className = 'rose';
+      rose.innerText = '🌹';
+      rose.style.top = '40%';
+      rose.style.left = '50%';
+      rose.style.transform = 'translate(-50%, -50%)';
+      document.body.appendChild(rose);
+
+      // Create message
+      const msg = document.createElement('div');
+      msg.className = 'message';
+      msg.innerText = 'Happy Rose Day 🌹\nRose of Rose Niki';
+      document.body.appendChild(msg);
+    }
+  </script>
+
+</body>
+</html>

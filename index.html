@@ -1,99 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Rose Day</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
-      font-family: 'Segoe UI', sans-serif;
-      overflow: hidden;
-    }
-
-    button {
-      padding: 15px 30px;
-      font-size: 18px;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      background: #e60026;
-      color: white;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      transition: transform 0.2s;
-    }
-
-    button:hover {
-      transform: scale(1.05);
-    }
-
-    .rose {
-      position: absolute;
-      font-size: 60px;
-      animation: pop 1s ease-out forwards;
-    }
-
-    @keyframes pop {
-      0% {
-        transform: scale(0);
-        opacity: 0;
-      }
-      60% {
-        transform: scale(1.2);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
-
-    .message {
-      margin-top: 20px;
-      font-size: 28px;
-      font-weight: bold;
-      color: #b3001b;
-      opacity: 0;
-      animation: fadeIn 2s forwards;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rose Day Preview 🌹</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Georgia',serif;height:100vh;overflow:hidden}
+.initial-page{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#ffeef8,#ffd6e8);transition:opacity 1s ease}
+.radio-container label{font-size:2rem;color:#d63384;background:#fff;padding:20px 45px;border-radius:50px;display:flex;gap:15px;align-items:center;cursor:pointer;box-shadow:0 15px 40px rgba(214,51,132,.35);transition:.4s}
+.radio-container label:hover{transform:scale(1.08)}
+input[type="radio"]{width:26px;height:26px;accent-color:#d63384}
+.rose-page{display:none;height:100vh;background:radial-gradient(circle at top,#ff8fb1,#7a0bc0);position:relative;overflow:hidden}
+.rose-page.active{display:block}
+.message{position:absolute;top:15%;left:50%;transform:translateX(-50%);text-align:center;z-index:10}
+.message h1{font-size:4rem;color:#fff;text-shadow:0 0 25px rgba(255,255,255,.7),0 0 60px rgba(255,107,157,1);animation:glow 2s infinite alternate}
+.name{margin-top:10px;font-size:2.2rem;color:#ffe6f2;animation:pulse 1.5s infinite}
+.roses-container{position:absolute;bottom:0;width:100%;display:flex;justify-content:space-around;align-items:flex-end;padding:0 40px}
+.rose{width:150px;height:180px;background-size:cover;background-position:center;border-radius:12px;filter:drop-shadow(0 15px 30px rgba(0,0,0,.5));animation:grow 2s ease forwards;position:relative}
+.rose::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(255,255,255,.4),transparent);animation:shine 3s infinite}
+.big-rose{width:320px;height:360px;animation:bigGrow 3s ease forwards;filter:drop-shadow(0 25px 50px rgba(255,20,147,.8))}
+.petal{position:absolute;top:-50px;width:40px;height:50px;background:url('https://images.unsplash.com/photo-1615750185825-4e59b6b50f67?w=100');background-size:cover;opacity:.85;animation:fall linear infinite}
+.music-btn{position:absolute;top:20px;right:20px;font-size:1.8rem;cursor:pointer;z-index:20}
+@keyframes glow{to{transform:scale(1.05)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+@keyframes grow{from{transform:translateY(200px) scale(0);opacity:0}to{transform:none;opacity:1}}
+@keyframes bigGrow{0%{transform:translateY(300px) scale(0);opacity:0}60%{transform:translateY(-30px) scale(1.1)}100%{transform:none;opacity:1}}
+@keyframes shine{from{left:-100%}to{left:100%}}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+</style>
 </head>
 <body>
-
-  <button onclick="showRose()">Click for a Surprise 🌹</button>
-
-  <script>
-    function showRose() {
-      // Remove existing elements
-      document.querySelectorAll('.rose, .message').forEach(e => e.remove());
-
-      // Create rose
-      const rose = document.createElement('div');
-      rose.className = 'rose';
-      rose.innerText = '🌹';
-      rose.style.top = '40%';
-      rose.style.left = '50%';
-      rose.style.transform = 'translate(-50%, -50%)';
-      document.body.appendChild(rose);
-
-      // Create message
-      const msg = document.createElement('div');
-      msg.className = 'message';
-      msg.innerText = 'Happy Rose Day 🌹\nRose of Rose Niki';
-      document.body.appendChild(msg);
-    }
-  </script>
-
+<div class="initial-page" id="initialPage">
+<div class="radio-container"><label><input type="radio" id="clickRadio">Click Me 💕</label></div>
+</div>
+<div class="rose-page" id="rosePage">
+<div class="music-btn" onclick="toggleMusic()">🎵</div>
+<div class="message"><h1 id="animatedText"></h1><div class="name">🌹 Nikiii ❤️</div></div>
+<div class="roses-container">
+<div class="rose" style="background-image:url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400')"></div>
+<div class="rose" style="background-image:url('https://images.unsplash.com/photo-1455659817273-f96807779a8a?w=400')"></div>
+<div class="rose big-rose" style="background-image:url('https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=600')"></div>
+<div class="rose" style="background-image:url('https://images.unsplash.com/photo-1464820453369-31d2c0b651af?w=400')"></div>
+<div class="rose" style="background-image:url('https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=400')"></div>
+</div>
+</div>
+<audio id="bgMusic" loop><source src="https://cdn.pixabay.com/audio/2022/10/30/audio_efcc84fa44.mp3"></audio>
+<script>
+const radio=document.getElementById('clickRadio');
+const music=document.getElementById('bgMusic');
+radio.addEventListener('change',()=>{document.getElementById('initialPage').style.opacity=0;setTimeout(()=>{document.getElementById('initialPage').style.display='none';document.getElementById('rosePage').classList.add('active');music.play();typeText();petals();},800)});
+function typeText(){const txt='Happy Rose Day';let i=0;const el=document.getElementById('animatedText');el.textContent='';const t=setInterval(()=>{el.textContent+=txt[i++];if(i===txt.length)clearInterval(t)},120)}
+function petals(){const page=document.getElementById('rosePage');for(let i=0;i<25;i++){const p=document.createElement('div');p.className='petal';p.style.left=Math.random()*100+'%';p.style.animationDuration=4+Math.random()*4+'s';page.appendChild(p)}}
+function toggleMusic(){music.paused?music.play():music.pause()}
+</script>
 </body>
 </html>

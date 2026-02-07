@@ -1,58 +1,315 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rose Day Preview 🌹</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Georgia',serif;height:100vh;overflow:hidden}
-.initial-page{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#ffeef8,#ffd6e8);transition:opacity 1s ease}
-.radio-container label{font-size:2rem;color:#d63384;background:#fff;padding:20px 45px;border-radius:50px;display:flex;gap:15px;align-items:center;cursor:pointer;box-shadow:0 15px 40px rgba(214,51,132,.35);transition:.4s}
-.radio-container label:hover{transform:scale(1.08)}
-input[type="radio"]{width:26px;height:26px;accent-color:#d63384}
-.rose-page{display:none;height:100vh;background:radial-gradient(circle at top,#ff8fb1,#7a0bc0);position:relative;overflow:hidden}
-.rose-page.active{display:block}
-.message{position:absolute;top:15%;left:50%;transform:translateX(-50%);text-align:center;z-index:10}
-.message h1{font-size:4rem;color:#fff;text-shadow:0 0 25px rgba(255,255,255,.7),0 0 60px rgba(255,107,157,1);animation:glow 2s infinite alternate}
-.name{margin-top:10px;font-size:2.2rem;color:#ffe6f2;animation:pulse 1.5s infinite}
-.roses-container{position:absolute;bottom:0;width:100%;display:flex;justify-content:space-around;align-items:flex-end;padding:0 40px}
-.rose{width:150px;height:180px;background-size:cover;background-position:center;border-radius:12px;filter:drop-shadow(0 15px 30px rgba(0,0,0,.5));animation:grow 2s ease forwards;position:relative}
-.rose::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(255,255,255,.4),transparent);animation:shine 3s infinite}
-.big-rose{width:320px;height:360px;animation:bigGrow 3s ease forwards;filter:drop-shadow(0 25px 50px rgba(255,20,147,.8))}
-.petal{position:absolute;top:-50px;width:40px;height:50px;background:url('https://images.unsplash.com/photo-1615750185825-4e59b6b50f67?w=100');background-size:cover;opacity:.85;animation:fall linear infinite}
-.music-btn{position:absolute;top:20px;right:20px;font-size:1.8rem;cursor:pointer;z-index:20}
-@keyframes glow{to{transform:scale(1.05)}}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
-@keyframes grow{from{transform:translateY(200px) scale(0);opacity:0}to{transform:none;opacity:1}}
-@keyframes bigGrow{0%{transform:translateY(300px) scale(0);opacity:0}60%{transform:translateY(-30px) scale(1.1)}100%{transform:none;opacity:1}}
-@keyframes shine{from{left:-100%}to{left:100%}}
-@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Rose Day</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ffd6e8, #ffeef6);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Click Button */
+    .click-wrapper {
+      background: white;
+      padding: 18px 40px;
+      border-radius: 50px;
+      box-shadow: 0 15px 30px rgba(255, 0, 102, 0.3);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: transform 0.3s ease;
+      z-index: 2;
+    }
+    .click-wrapper:hover { transform: scale(1.05); }
+
+    .radio {
+      width: 22px;
+      height: 22px;
+      border: 2px solid #ff4d88;
+      border-radius: 50%;
+    }
+
+    .click-text {
+      font-size: 28px;
+      color: #ff2f7a;
+      font-weight: 600;
+    }
+
+    /* Rose Scene */
+    .rose-scene {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top, #3a001f, #0b0006);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+      overflow: hidden;
+    }
+
+    #open:checked ~ .rose-scene {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #open:checked + label {
+      display: none;
+    }
+
+    /* Auto Rose Images (Online) */
+    .rose-images {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .rose-images img {
+      width: 220px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .rose-images img:nth-child(2) { animation-delay: 1s; }
+    .rose-images img:nth-child(3) { animation-delay: 2s; }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    /* Text Animation */
+    .message {
+      font-size: 44px;
+      color: #ffb6d5;
+      text-align: center;
+      font-weight: bold;
+      animation: glow 2s ease-in-out infinite alternate;
+      z-index: 2;
+      padding: 0 20px;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ff4d88; }
+      to { text-shadow: 0 0 30px #ff8fc0, 0 0 60px #ff4d88; }
+    }
+
+    /* Subtitle Message */
+    .subtitle {
+      font-size: 22px;
+      color: #ffc5d9;
+      text-align: center;
+      font-style: italic;
+      margin-top: 20px;
+      z-index: 2;
+      padding: 0 20px;
+      opacity: 0;
+      animation: fadeIn 2s ease-in 1.5s forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Falling Petals */
+    .petal {
+      position: absolute;
+      top: -50px;
+      width: 18px;
+      height: 18px;
+      background: radial-gradient(circle, #ffb6c1, #ff4d88);
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(45deg);
+      animation: fall linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+      }
+    }
+
+    /* Sparkles Effect */
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #fff, 0 0 20px #ffb6d5;
+      animation: sparkle-fall linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes sparkle-fall {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(100vh) scale(0);
+      }
+    }
+
+    /* Floating Hearts */
+    .heart {
+      position: absolute;
+      bottom: -50px;
+      font-size: 24px;
+      animation: heart-rise linear infinite;
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    @keyframes heart-rise {
+      0% {
+        bottom: -50px;
+        opacity: 0.8;
+      }
+      100% {
+        bottom: 110vh;
+        opacity: 0;
+        transform: translateX(100px);
+      }
+    }
+
+    /* Pulsing Glow Border */
+    .glow-border {
+      position: absolute;
+      inset: 20px;
+      border: 2px solid transparent;
+      border-radius: 20px;
+      animation: border-glow 3s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes border-glow {
+      0%, 100% {
+        box-shadow: 
+          inset 0 0 20px rgba(255, 77, 136, 0.3),
+          0 0 20px rgba(255, 77, 136, 0.3);
+      }
+      50% {
+        box-shadow: 
+          inset 0 0 40px rgba(255, 77, 136, 0.6),
+          0 0 40px rgba(255, 77, 136, 0.6);
+      }
+    }
+
+    /* Rotating Rose Background Pattern */
+    .rose-pattern {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(255, 77, 136, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 77, 136, 0.05) 0%, transparent 50%);
+      animation: pattern-rotate 20s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes pattern-rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .rose-images { flex-direction: column; }
+      .rose-images img { width: 180px; height: 240px; }
+      .message { font-size: 30px; }
+      .subtitle { font-size: 16px; }
+    }
+  </style>
 </head>
 <body>
-<div class="initial-page" id="initialPage">
-<div class="radio-container"><label><input type="radio" id="clickRadio">Click Me 💕</label></div>
-</div>
-<div class="rose-page" id="rosePage">
-<div class="music-btn" onclick="toggleMusic()">🎵</div>
-<div class="message"><h1 id="animatedText"></h1><div class="name">🌹 Nikiii ❤️</div></div>
-<div class="roses-container">
-<div class="rose" style="background-image:url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400')"></div>
-<div class="rose" style="background-image:url('https://images.unsplash.com/photo-1455659817273-f96807779a8a?w=400')"></div>
-<div class="rose big-rose" style="background-image:url('https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=600')"></div>
-<div class="rose" style="background-image:url('https://images.unsplash.com/photo-1464820453369-31d2c0b651af?w=400')"></div>
-<div class="rose" style="background-image:url('https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=400')"></div>
-</div>
-</div>
-<audio id="bgMusic" loop><source src="https://cdn.pixabay.com/audio/2022/10/30/audio_efcc84fa44.mp3"></audio>
-<script>
-const radio=document.getElementById('clickRadio');
-const music=document.getElementById('bgMusic');
-radio.addEventListener('change',()=>{document.getElementById('initialPage').style.opacity=0;setTimeout(()=>{document.getElementById('initialPage').style.display='none';document.getElementById('rosePage').classList.add('active');music.play();typeText();petals();},800)});
-function typeText(){const txt='Happy Rose Day';let i=0;const el=document.getElementById('animatedText');el.textContent='';const t=setInterval(()=>{el.textContent+=txt[i++];if(i===txt.length)clearInterval(t)},120)}
-function petals(){const page=document.getElementById('rosePage');for(let i=0;i<25;i++){const p=document.createElement('div');p.className='petal';p.style.left=Math.random()*100+'%';p.style.animationDuration=4+Math.random()*4+'s';page.appendChild(p)}}
-function toggleMusic(){music.paused?music.play():music.pause()}
-</script>
+
+  <!-- Radio Button Trigger -->
+  <input type="radio" id="open" name="rose" hidden>
+  <label for="open" class="click-wrapper">
+    <div class="radio"></div>
+    <div class="click-text">Click Me</div>
+  </label>
+
+  <div class="rose-scene">
+    <!-- Background Pattern -->
+    <div class="rose-pattern"></div>
+    
+    <!-- Glow Border -->
+    <div class="glow-border"></div>
+
+    <div class="rose-images">
+      <img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7" alt="Rose">
+    </div>
+
+    <div class="message">🌹 HAPPY ROSE DAY 🌹<br/>to roses of rose <span style="color:#ff6fae">Nikiiiii</span></div>
+
+    <div class="subtitle">You deserve all the good things in the world, just like roses, Niki</div>
+  </div>
+
+  <script>
+    const scene = document.querySelector('.rose-scene');
+
+    // Existing petal creation
+    function createPetal() {
+      const petal = document.createElement('div');
+      petal.className = 'petal';
+      petal.style.left = Math.random() * window.innerWidth + 'px';
+      petal.style.animationDuration = 6 + Math.random() * 5 + 's';
+      petal.style.opacity = Math.random();
+      scene.appendChild(petal);
+
+      setTimeout(() => petal.remove(), 11000);
+    }
+
+    setInterval(createPetal, 350);
+
+    // Sparkles
+    function createSparkle() {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'sparkle';
+      sparkle.style.left = Math.random() * window.innerWidth + 'px';
+      sparkle.style.animationDuration = 3 + Math.random() * 3 + 's';
+      scene.appendChild(sparkle);
+
+      setTimeout(() => sparkle.remove(), 6000);
+    }
+
+    setInterval(createSparkle, 200);
+
+    // Rising Hearts
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.textContent = ['💕', '💖', '💗', '💓'][Math.floor(Math.random() * 4)];
+      heart.style.left = Math.random() * window.innerWidth + 'px';
+      heart.style.animationDuration = 8 + Math.random() * 4 + 's';
+      scene.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 12000);
+    }
+
+    setInterval(createHeart, 800);
+  </script>
+
 </body>
 </html>
